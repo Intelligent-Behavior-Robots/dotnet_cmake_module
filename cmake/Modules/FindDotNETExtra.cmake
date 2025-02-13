@@ -33,6 +33,9 @@ function(add_dotnet_library _TARGET_NAME)
     ${_add_dotnet_library_INCLUDE_NUPKGS}
     INCLUDE_REFERENCES
     ${_add_dotnet_library_INCLUDE_REFERENCES}
+    DEFINE_CONSTANTS
+    ${_add_dotnet_library_DEFINE_CONSTANTS}
+
   )
 endfunction()
 

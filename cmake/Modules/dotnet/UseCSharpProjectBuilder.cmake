@@ -15,7 +15,7 @@ function(csharp_add_project name)
     cmake_parse_arguments(_csharp_add_project
         "EXECUTABLE"
         ""
-        "SOURCES;INCLUDE_DLLS;INCLUDE_NUPKGS;INCLUDE_REFERENCES"
+        "SOURCES;INCLUDE_DLLS;INCLUDE_NUPKGS;INCLUDE_REFERENCES;DEFINE_CONSTANTS"
         ${ARGN}
     )
 
@@ -24,6 +24,17 @@ function(csharp_add_project name)
         ${_csharp_add_project_SOURCES}
         ${_csharp_add_project_UNPARSED_ARGUMENTS}
     )
+
+    foreach(it ${_csharp_add_project_DEFINE_CONSTANTS})
+        list(APPEND defines "${it};")
+    endforeach()
+
+    if(defines)
+        set(CSHARP_DEFINE_CONSTANTS "${defines}")
+    else()
+        set(CSHARP_DEFINE_CONSTANTS "")
+    endif()
+
 
     foreach(it ${_csharp_add_project_INCLUDE_DLLS})
         file(TO_NATIVE_PATH ${it} nit)
@@ -155,6 +166,7 @@ function(csharp_add_project name)
         -DCSHARP_IMPORTS="${CSHARP_IMPORTS}"
         -DCONFIG_INPUT_FILE="${CSBUILD_CSPROJ_IN}"
         -DCONFIG_OUTPUT_FILE="${CURRENT_TARGET_BINARY_DIR}/${name}/${CSBUILD_${name}_CSPROJ}"
+        -DCSHARP_DEFINE_CONSTANTS="${CSHARP_DEFINE_CONSTANTS}"
         -P ${dotnet_cmake_module_DIR}/ConfigureFile.cmake
 
         COMMAND ${CMAKE_COMMAND}

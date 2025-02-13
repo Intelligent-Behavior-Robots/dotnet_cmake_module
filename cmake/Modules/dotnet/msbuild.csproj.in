@@ -38,7 +38,8 @@
     @CSHARP_BUILDER_SOURCES@
   </ItemGroup>
   <ItemGroup>
-   <!-- @CSHARP_PACKAGE_REFERENCES@ -->
+  <!-- PACKAGE REFERENCES -->
+    @CSHARP_PACKAGE_REFERENCES@
   </ItemGroup>
 
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
